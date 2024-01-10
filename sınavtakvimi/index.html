@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Ocak Ayı Sınav Takvimi</title>
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #010b14;
+            color: #dfe1e6;
+        }
+
+        .exam-card {
+            background-color: #051422;
+            color: #dfe1e6;
+            border-radius: 10px;
+        }
+
+        .edit-form input {
+            margin-bottom: 5px;
+        }
+
+        .edit-form button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-form input {
+            margin-bottom: 5px;
+        }
+
+        .add-form button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .calendar-day {
+            cursor: pointer;
+        }
+
+        .calendar-day:hover {
+            background-color: #343a40;
+        }
+
+        .exam-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .exam-list-item {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">2024 Ocak Ayı Sınav Takvimi</h2>
+
+        <div class="row row-cols-7 g-2" id="calendarContainer">
+           
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 mt-4" id="examCardsContainer">
+          
+        </div>
+
+        <div class="row mt-4">
+            <div class="col text-center">
+                <button class="btn btn-success" onclick="addExamForm()">Kart Ekle</button>
+                <button class="btn btn-danger" onclick="removeExam()">Kart Sil</button>
+            </div>
+        </div>
+
+       
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+          
+            var january2024Calendar = [
+                ["", "", "", "", "", 1, 2],
+                [3, 4, 5, 6, 7, 8, 9],
+                [10, 11, 12, 13, 14, 15, 16],
+                [17, 18, 19, 20, 21, 22, 23],
+                [24, 25, 26, 27, 28, 29, 30],
+                [31, "", "", "", "", "", ""]
+            ];
+
+           
+            var examDays = [13,14,15,16,17,18,21];
+
+         
+            var calendarContainer = document.getElementById("calendarContainer");
+
+           
+            for (var i = 0; i < january2024Calendar.length; i++) {
+                var row = document.createElement("div");
+                row.className = "row";
+
+                for (var j = 0; j < january2024Calendar[i].length; j++) {
+                    var day = january2024Calendar[i][j];
+                    var cell = document.createElement("div");
+                    cell.className = "col text-center py-2 calendar-day";
+
+                    if (day !== "") {
+                        cell.innerHTML = day;
+
+                      
+                        if (examDays.includes(day)) {
+                            cell.style.color = "red";
+                            cell.onclick = function() {
+                                showExamsOfDay(this.textContent);
+                            };
+                        }
+                    }
+
+                   
+                    if (i > 0) {
+                        cell.classList.add("calendar-day");
+                    }
+
+                    row.appendChild(cell);
+                }
+
+                calendarContainer.appendChild(row);
+            }
+
+            var examData = [
+                {
+                    date: "13.01.2024",
+                    time: "17:30-18:00",
+                    course: "EĞİTİME GİRİŞ",
+                    location: "M1-M2",
+                    instructor: "DR. ÖĞR. ÜYESİ A. MİNE DİNÇER GÜL"
+                },
+                {
+                    date: "13.01.2024",
+                    time: "18:15-18:45",
+                    course: "ÖĞRETİM İLKE VE YÖNTEMLERİ",
+                    location: "M1-M2",
+                    instructor: "DOÇ. DR. CEVAT EKER"
+                },
+                {
+                    date: "14.01.2024",
+                    time: "17:00-17:30",
+                    course: "REHBERLİK VE ÖZEL EĞİTİM",
+                    location: "M1-M2-M3",
+                    instructor: "DOÇ. DR. MURAT İNCE"
+                },
+                {
+                    date: "14.01.2024",
+                    time: "17:45-18:15",
+                    course: "ÖZEL ÖĞRETİM YÖNTEMLERİ",
+                    location: "M1-M2",
+                    instructor: "DOÇ. DR. AYSEL DEMİROĞLU"
+                },
+                {
+                    date: "15.01.2024",
+                    time: "13:30-15:15",
+                    course: "Tahribatsız Kalite Kontrol",
+                    location: "Dil Lab. 4",
+                    instructor: "Dr. Öğr. Üyesi Ö. A. KALAYCI"
+                },
+                {
+                    date: "16.01.2024",
+                    time: "10:30-12:15",
+                    course: "Sağlık Fiziği",
+                    location: "Dil Lab. 4",
+                    instructor: "Prof. Dr. K. DEMİR"
+                },
+                {
+                    date: "16.01.2024",
+                    time: "13:30-15:15",
+                    course: "Klasik Mekanik",
+                    location: "F1 7",
+                    instructor: "Prof. Dr. H. ARSLAN"
+                },
+                {
+                    date: "17.01.2024",
+                    time: "10:30-12:30",
+                    course: "İstatistik Fizik I",
+                    location: "Dil Lab. 11",
+                    instructor: "Prof. Dr. Y. AYAZ"
+                },
+                {
+                    date: "17.01.2024",
+                    time: "15:30-17:15",
+                    course: "Bilgisayar Uygulamaları",
+                    location: "F1 33",
+                    instructor: "Doç. Dr. O. ARTUN"
+                },
+                {
+                    date: "18.01.2024",
+                    time: "12:30",
+                    course: "Seminer",
+                    location: "Öğr.Üye.Ofis",
+                    instructor: "Prof. Dr. M. H. GÜVEN-Prof. Dr. Y. AYAZ -Doç. Dr. O. ARTUN-Prof.Dr. H. ARSLAN"
+                },
+                {
+                    date: "18.01.2024",
+                    time: "13:30-15:15",
+                    course: "Gazların Moleküler Teorisi",
+                    location: "F1 3",
+                    instructor: "Dr. Öğr. Üyesi A. YILMAZ"
+                },
+                {
+                    date: "18.01.2024",
+                    time: "15:30-17:15",
+                    course: "Teorik Fizik Yöntemleri",
+                    location: "F1 12",
+                    instructor: "Dr. Öğr. Üyesi N. AKINCI"
+                },
+                {
+                    date: "21.01.2024",
+                    time: "18:00-18:30",
+                    course: "SINIF YÖNETİMİ",
+                    location: "M1-M2",
+                    instructor: "DOÇ. DR. SEYİTHAN DEMİRDAĞ"
+                }
+            ];
+
+          
+            var examCardsContainer = document.getElementById("examCardsContainer");
+
+            
+            function createExamCards() {
+                for (var i = 0; i < examData.length; i++) {
+                    createExamCard(i);
+                }
+            }
+
+           
+            function createExamCard(index) {
+                var card = document.createElement("div");
+                card.className = "col";
+                card.innerHTML = `
+                    <div class="card h-100 shadow exam-card">
+                        <div class="card-body">
+                            <h5 class="card-title" id="courseTitle${index}">${examData[index].course}</h5>
+                            <p class="card-text" id="examDate${index}">${examData[index].date} | ${examData[index].time}</p>
+                            <p class="card-text" id="location${index}">${examData[index].location}</p>
+                            <p class="card-text" id="instructor${index}">${examData[index].instructor}</p>
+                            <button class="btn btn-primary" onclick="editExam(${index})">Düzenle</button>
+                        </div>
+                    </div>
+                `;
+                examCardsContainer.appendChild(card);
+            }
+
+            
+            createExamCards();
+
+           
+            function editExam(index) {
+                var courseTitle = prompt("Ders Adı:", examData[index].course);
+                var examDate = prompt("Sınav Tarihi:", examData[index].date);
+                var examTime = prompt("Sınav Saati:", examData[index].time);
+                var location = prompt("Sınav Yeri:", examData[index].location);
+                var instructor = prompt("Öğretim Görevlisi:", examData[index].instructor);
+
+                
+                if (courseTitle === null || courseTitle === "") return;
+
+                var card = examCardsContainer.children[index];
+                card.innerHTML = `
+                    <div class="card h-100 shadow exam-card">
+                        <div class="card-body">
+                            <h5 class="card-title" id="courseTitle${index}">${courseTitle}</h5>
+                            <p class="card-text" id="examDate${index}">${examDate} | ${examTime}</p>
+                            <p class="card-text" id="location${index}">${location}</p>
+                            <p class="card-text" id="instructor${index}">${instructor}</p>
+                            <button class="btn btn-primary" onclick="editExam(${index})">Düzenle</button>
+                        </div>
+                    </div>
+                `;
+
+                examData[index] = {
+                    date: examDate,
+                    time: examTime,
+                    course: courseTitle,
+                    location: location,
+                    instructor: instructor
+                };
+            }
+
+            function addExamForm() {
+                var courseTitle = prompt("Ders Adı:");
+                var examDate = prompt("Sınav Tarihi:");
+                var examTime = prompt("Sınav Saati:");
+                var location = prompt("Sınav Yeri:");
+                var instructor = prompt("Öğretim Görevlisi:");
+
+                
+                if (courseTitle === null || courseTitle === "") return;
+
+               
+                createExamCard(examData.length);
+
+                examData.push({
+                    date: examDate,
+                    time: examTime,
+                    course: courseTitle,
+                    location: location,
+                    instructor: instructor
+                });
+            }
+
+           
+            function removeExam() {
+                var index = prompt("Silmek istediğiniz sınavın indeksi:");
+                
+                
+                if (index === null || index === "") return;
+
+              
+                index = parseInt(index);
+
+                               
+                                if (!isNaN(index) && index >= 0 && index < examData.length) {
+                    examData.splice(index, 1);
+                    examCardsContainer.removeChild(examCardsContainer.children[index]);
+                } else {
+                    alert("Geçersiz indeks!");
+                }
+            }
+
+            
+            function showExamsOfDay(day) {
+                var examsOfDay = examData.filter(function(exam) {
+                    return exam.date.includes(day);
+                });
+
+                if (examsOfDay.length > 0) {
+                    var examList = examsOfDay.map(function(exam) {
+                        return `${exam.course} | ${exam.time} | ${exam.location} | ${exam.instructor}`;
+                    }).join('');
+
+                    alert(`Bu günde şu sınavlar var : ${examList}`);
+                } else {
+                    alert("Bu günde sınav yok.");
+                }
+            }
+        </script>
+    </body>
+</html>
